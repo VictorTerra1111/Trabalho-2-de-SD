@@ -125,6 +125,7 @@ module BullsCows(
                     end
                 end 
                 default: states <= S1;
+            endcase
         end
     end
-
+endmodule
