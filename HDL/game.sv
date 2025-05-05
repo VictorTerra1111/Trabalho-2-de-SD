@@ -94,11 +94,12 @@ module BullsCows(
                     end 
                     if(bulls == 4) begin
                         states <= WIN; // se todos os numeros estiver certos 
+                        flag_winner <= 0;
                     end else begin // se errou
                         states <= T2;
                     end
                 end     
-                T2: begin // mesma logicada pra fazer ate uma task pra nao repetir codigo
+                T2: begin // mesma logica da pra fazer ate uma task pra nao repetir codigo
                     try <= code;
                     for(counter; counter < 16; counter <= counter + 1) begin
                         if(try tem algum numero igual a code) begin
@@ -110,10 +111,10 @@ module BullsCows(
                         end
                     end 
                     if(bulls == 4) begin
-
                         states <= WIN; // se todos os numeros estiver certos 
+                        flag_winner <= 1;
                     end else begin // se errou
-                        states <= T2;
+                        states <= T1;
                     end
                 end 
                 WIN: begin
