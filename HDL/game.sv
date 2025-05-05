@@ -58,7 +58,7 @@ module BullsCows(
             counter <= 0;
         end else begin
             /* 
-            começa testando se o codigo tem algum digito repetido, se tiver nem faz nada
+            começa testando se o codigo tem algum digito repetido, se tiver vai pra erro
             se nao tiver nenhum repetido, pode usar tranquilo
             ^^^ desse jeito nao precisa testar toda vez em cada estado
 
