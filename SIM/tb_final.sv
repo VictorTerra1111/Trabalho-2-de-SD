@@ -7,8 +7,14 @@ module tb_final #();
   always #5 clock = ~clock;
 
   initial begin
+    #10
+    reset = 0;
+    #10 
     reset = 1;
     #10
+    reset = 0;
+    #10
+
     #stop
   end
 
