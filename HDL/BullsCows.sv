@@ -1,6 +1,4 @@
-/*
-        TEM QUE ALTERAR QUANDO ENVIA DIG PRA ENVIAR POS TAMBÉM
-   
+/*   
     S1 = secret 1 (stores player 1 secret code). 
         inputs: 
             4 number code.
@@ -50,6 +48,15 @@ module BullsCows(
     reg counter, bulls, cows; // contador pra verificar o segredo
     reg p1_points, p2_points;
     reg flag_winner; // 0: p1 wins  1: p2 wins
+
+    logic confirm_button_raw, confirm_rising;
+
+    edge_detector enter_press (
+        .clock(clock),
+        .reset(reset),
+        .din(confirm_button_raw),    // sinal vindo do botão (ex: btnC)
+        .rising(confirm_rising)      // pulso de 1 ciclo ao pressionar
+    );
 
     always_ff @(posedge clock) begin
         if (reset) begin
