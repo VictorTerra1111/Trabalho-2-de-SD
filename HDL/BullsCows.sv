@@ -1,4 +1,6 @@
 /*
+        TEM QUE ALTERAR QUANDO ENVIA DIG PRA ENVIAR POS TAMBÉM
+   
     S1 = secret 1 (stores player 1 secret code). 
         inputs: 
             4 number code.
@@ -38,9 +40,9 @@ module BullsCows(
     input reset,
     input enter_button,
 
-    output // n sei?
+    output [5:0]d1, d2, d3, d4, d5, d6, d7, d8
 );
-    typedef enum logic [1:0] {S1, S2, T1, T2, WIN, ERROR} states_t;
+    typedef enum logic [1:0] {S1, S2, T1, T2, WIN} states_t;
     states_t states;
 
     reg [15:0] secret1, secret2, try;
@@ -56,6 +58,7 @@ module BullsCows(
             secret2 <= 16'b0;
             try <= 16'b0;
             counter <= 0;
+            pos <= 7;
         end else begin
             /* 
             começa testando se o codigo tem algum digito repetido, se tiver vai pra erro
@@ -74,14 +77,28 @@ module BullsCows(
 
             case (states)
                 S1: begin
+                    dig <= 6'b001010; // P na posicao 7
+                    dig <= 6'b000001; // 1 na posicao 6
+                    dig <= 6'd20; // nada na posicao 5
+                    dig <= 6'b1011; // S na posicao 4
+                    dig <= 6'b1100; // U na posicao 3
                     secret1 <= code;
                     states <= S2;
                 end
                 S2: begin
+                    dig <= 6'b1010; // P na posicao 7
+                    dig <= 6'b0010; // 2 na posicao 6
+                    dig <= 6'd20; // nada na posicao 5
+                    dig <= 6'b1011; // S na posicao 4
+                    dig <= 6'b1100; // U na posicao 3
                     secret2 <= code;
                     states <= T1;
                 end
                 T1: begin
+                    dig <= 6'b1010; // P na posicao 7
+                    dig <= 6'b0001; // 1 na posicao 6
+                    dig <= 6'd20; // nada na posicao 5
+                    dig <= 6'b10001; // G na posicao 4
                     try <= code;
                     for(counter; counter < 16; counter <= counter + 1) begin
                         if(try tem algum numero igual a code) begin
@@ -100,6 +117,10 @@ module BullsCows(
                     end
                 end     
                 T2: begin // mesma logica da pra fazer ate uma task pra nao repetir codigo
+                    dig <= 6'b001010; // P na posicao 7
+                    dig <= 6'b000010; // 2 na posicao 6
+                    dig <= 6'd20; // nada na posicao 5
+                    dig <= 6'b010001; // G na posicao 4
                     try <= code;
                     for(counter; counter < 16; counter <= counter + 1) begin
                         if(try tem algum numero igual a code) begin
@@ -118,12 +139,15 @@ module BullsCows(
                     end
                 end 
                 WIN: begin
+                    dig <= 6'b001111; // B
+                    dig <= 6'b001101 // E
                     if (flag_winner) begin
                         p2_points <= p2_points + 1;
                     end else begin
                         p1_points <= p1_points + 1;
                     end
                 end 
+
                 default: states <= S1;
             endcase
         end
