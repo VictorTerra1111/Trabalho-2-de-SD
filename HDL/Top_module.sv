@@ -1,39 +1,40 @@
 module Jogo_top(
-    input logic [3:0] code,
+    input logic [15:0] code,
     input logic reset, clock, enter_button,
-    output logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8
+    output logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
+    output logic [15:0] led,
+    output logic [7:0] an,
+    output logic [7:0] seg
 );
 
-    logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8;
+    wire p1_win_pulse, p2_win_pulse;
 
     dspl_drv_NexysA7 display(
         .clock(clock),
         .reset(reset),
-        .d1(d1), 
-        .d2(d2), 
-        .d3(d3), 
-        .d4(d4),
-        .d5(d5), 
-        .d6(d6), 
-        .d7(d7), 
-        .d8(d8),
+        .d1(d1), .d2(d2), .d3(d3), .d4(d4),
+        .d5(d5), .d6(d6), .d7(d7), .d8(d8),
         .an(an),
         .dec_ddp(seg)
     );
 
-    BullsCows jogo(
+    BullsCows game (
         .code(code),
         .clock(clock),
         .reset(reset),
         .enter_button(enter_button),
-        .d1(d1), 
-        .d2(d2), 
-        .d3(d3), 
-        .d4(d4), 
-        .d5(d5), 
-        .d6(d6), 
-        .d7(d7), 
-        .d8(d8)
+        .d1(d1), .d2(d2), .d3(d3), .d4(d4),
+        .d5(d5), .d6(d6), .d7(d7), .d8(d8),
+        .p1_win(p1_win_pulse),
+        .p2_win(p2_win_pulse)
+    );
+
+    pontuacao pontos (
+        .clock(clock),
+        .reset(reset),
+        .p1vic(p1_win_pulse),
+        .p2vic(p2_win_pulse),
+        .led(led)
     );
 
 endmodule

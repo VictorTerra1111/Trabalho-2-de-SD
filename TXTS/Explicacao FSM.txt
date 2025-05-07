@@ -1,0 +1,31 @@
+  S1 = secret 1 (stores player 1 secret code). 
+        inputs: 
+            4 number code.
+            push button enter.
+        if there is any equal digits, comes back;
+        else goes to S2;
+
+    S2 = secret 2 (stores player 2 secret code).
+        inputs: 
+            4 number code.
+            push button enter.
+        if there is any equal digits, come back;
+        else goes to T1;
+
+    T1 = try 1 (player 1 tries to get the secret 2 right).
+        inputs:
+            4 number code.
+            push button enter.
+        if new code is equal to secret 2, goes to WIN;
+        else goes to T2;
+
+    T2 = try 2 (player 2 tries to get the secret 1 right).
+        inputs:
+            4 number code.
+            push button enter.
+        if new code is equal to secret 1, goes to WIN;
+        else goes to T1;
+
+    WIN = when a player gets the other player's code right.
+        increment points
+        reset everything
