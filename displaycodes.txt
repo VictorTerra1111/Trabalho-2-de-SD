@@ -1,0 +1,23 @@
+//// codigos pra mostrar no display ////
+https://github.com/rudrakshkohli/FPGA-projects/blob/main/I2C-based%20Temperature%20Sensor%20(Nexys%20A7%2C%20ADT7420)
+
+quando tiver setando player1:           P1 SU
+quando tiver setando player2:           P2 SU
+quando der erro:                        Err 
+quando p1 tentar acertar sequencia:     P1 G
+quando p2 tentar acertar sequencia:     P2 G
+depois de cada rodada:                  X b (espaço) X c
+quando alguem ganhar:                   b (espaço) E
+
+P: 1100111
+S: 1011011
+U: 0111110
+E: 1001111
+r: 0000101
+b: 0011111
+c: 0001101
+G: 1011111
+
+
+
+SITE explicativo:https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual?_gl=1*1wnvjoz*_ga*MTg0NjI2MTM5NS4xNzQ2NjE5NzUw*_ga_35QL6YVFN1*czE3NDY2MTk3NTAkbzEkZzEkdDE3NDY2MTk3NjIkajQ4JGwwJGgxMTM3OTMxOTE4#seven-segment_display
