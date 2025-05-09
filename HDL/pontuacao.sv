@@ -3,7 +3,7 @@ module pontuacao(
     input reset,
     input p1vic,      
     input p2vic,      
-    output [15:0] LED
+    output reg [15:0] LED
 );
 
     reg [3:0] p1pontos;
