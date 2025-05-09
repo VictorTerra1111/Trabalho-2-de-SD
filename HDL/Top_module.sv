@@ -1,13 +1,13 @@
 module Top_module(
     input logic [15:0] SW,
     input logic reset, clock, ssl,
-    output logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
     output logic [15:0] LED,
     output logic [7:0] an,
     output logic [7:0] dec_ddp
 );
 
     wire p1_win_pulse, p2_win_pulse;
+    logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
 
     dspl_drv_NexysA7 display(
         .clock(clock),
