@@ -7,7 +7,7 @@ module Top_module(
 );
 
     wire p1_win_pulse, p2_win_pulse;
-    logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
+    logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8;
 
     dspl_drv_NexysA7 display(
         .clock(clock),
