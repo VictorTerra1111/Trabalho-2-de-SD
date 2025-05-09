@@ -1,12 +1,12 @@
 module BullsCows(
-    input [15:0] code,
+    input [15:0] SW,
     input clock,
     input reset,
     input enter_button,
 
-    output reg [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
-    output reg p1_win,
-    output reg p2_win
+    output [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
+    output p1_win,
+    output p2_win
 );
     typedef enum logic [2:0] {S1, S2, T1, T2, RESULT, WIN} state_t;
     state_t state;
@@ -60,19 +60,19 @@ module BullsCows(
                     d1 <= 6'b1100111; d2 <= 6'b0000001; // P1
                     d3 <= 6'b0000000; d4 <= 6'b1011011; // S
                     d5 <= 6'b0111110;
-                    if (enter_rising) begin secret1 <= code; state <= S2; end
+                    if (enter_rising) begin secret1 <= SW; state <= S2; end
                 end
                 S2: begin
                     d1 <= 6'b1100111; d2 <= 6'b0000010; // P2
                     d3 <= 6'b0000000; d4 <= 6'b1011011; // S
                     d5 <= 6'b0111110;
-                    if (enter_rising) begin secret2 <= code; state <= T1; end
+                    if (enter_rising) begin secret2 <= SW; state <= T1; end
                 end
                 T1: begin
                     d1 <= 6'b1100111; d2 <= 6'b0000001; // P1 G
                     d3 <= 6'b0000000; d4 <= 6'b1011111;
                     if (enter_rising) begin
-                        calc_bulls_cows(secret2, code, bulls, cows);
+                        calc_bulls_cows(secret2, SW, bulls, cows);
                         if (bulls == 4) begin flag_winner <= 0; state <= WIN; end
                         else state <= RESULT;
                     end
@@ -81,7 +81,7 @@ module BullsCows(
                     d1 <= 6'b1100111; d2 <= 6'b0000010; // P2 G
                     d3 <= 6'b0000000; d4 <= 6'b1011111;
                     if (enter_rising) begin
-                        calc_bulls_cows(secret1, code, bulls, cows);
+                        calc_bulls_cows(secret1, SW, bulls, cows);
                         if (bulls == 4) begin flag_winner <= 1; state <= WIN; end
                         else state <= RESULT;
                     end
