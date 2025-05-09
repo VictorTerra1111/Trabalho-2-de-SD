@@ -1,6 +1,6 @@
 module Top_module(
     input logic [15:0] SW,
-    input logic reset, clock, enter_button,
+    input logic reset, clock, ssl,
     output logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
     output logic [15:0] LED,
     output logic [7:0] an,
@@ -22,7 +22,7 @@ module Top_module(
         .SW(SW),
         .clock(clock),
         .reset(reset),
-        .enter_button(enter_button),
+        .ssl(ssl),
         .d1(d1), .d2(d2), .d3(d3), .d4(d4),
         .d5(d5), .d6(d6), .d7(d7), .d8(d8),
         .p1_win(p1_win_pulse),

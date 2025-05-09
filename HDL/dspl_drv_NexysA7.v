@@ -86,25 +86,25 @@ module dspl_drv_NexysA7
   // digit 4-to-hex decoder
   always @*
   begin
-    case (selected_dig[4:0])
-      5'h0 : dec_ddp[7:1] = 7'b0000001;
-      5'h1 : dec_ddp[7:1] = 7'b1001111;
-      5'h2 : dec_ddp[7:1] = 7'b0010010;
-      5'h3 : dec_ddp[7:1] = 7'b0000110;
-      5'h4 : dec_ddp[7:1] = 7'b1001100;
-      5'h5 : dec_ddp[7:1] = 7'b0100100;
-      5'h6 : dec_ddp[7:1] = 7'b0100000;
-      5'h7 : dec_ddp[7:1] = 7'b0001111;
-      5'h8 : dec_ddp[7:1] = 7'b0000000;
-      5'h9 : dec_ddp[7:1] = 7'b0000100;
-      5'hA : dec_ddp[7:1] = 7'b0011000; // P
-      5'hB : dec_ddp[7:1] = 7'b1100000;
-      5'hC : dec_ddp[7:1] = 7'b0110001;
-      5'hD : dec_ddp[7:1] = 7'b0100100; // S
-      5'hE : dec_ddp[7:1] = 7'b0110000;
-      5'hF : dec_ddp[7:1] = 7'b1000001; // U
-      5'h10 : dec_ddp[7:1] = 7'b1111010; // r
-      default : dec_ddp[7:1] = 7'b0000000;
+    case (selected_dig[4:1])
+      4'h0 : dec_ddp[7:1] = 7'b0000001;
+      4'h1 : dec_ddp[7:1] = 7'b1001111;
+      4'h2 : dec_ddp[7:1] = 7'b0010010;
+      4'h3 : dec_ddp[7:1] = 7'b0000110;
+      4'h4 : dec_ddp[7:1] = 7'b1001100;
+      4'h5 : dec_ddp[7:1] = 7'b0100100;
+      4'h6 : dec_ddp[7:1] = 7'b0100000;
+      4'h7 : dec_ddp[7:1] = 7'b0001111;
+      4'h8 : dec_ddp[7:1] = 7'b0000000;
+      4'h9 : dec_ddp[7:1] = 7'b0000100;
+      4'hA : dec_ddp[7:1] = 7'b0001000; // P
+      4'hB : dec_ddp[7:1] = 7'b1100000;
+      4'hC : dec_ddp[7:1] = 7'b0110001;
+      4'hD : dec_ddp[7:1] = 7'b1000010; // S
+      4'hE : dec_ddp[7:1] = 7'b0110000;
+      4'hF : dec_ddp[7:1] = 7'b1000001; // U 
+
+      default : dec_ddp[7:1] = 7'b1111111;
     endcase
     dec_ddp[0] = selected_dig[0];
   end

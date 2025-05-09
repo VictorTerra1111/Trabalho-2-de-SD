@@ -1,9 +1,7 @@
 
 quando tiver setando player1:           P1 SU
 quando tiver setando player2:           P2 SU
-quando der erro:                        Err 
-quando p1 tentar acertar sequencia:     P1 G
-quando p2 tentar acertar sequencia:     P2 G
+quando p1 tentar acertar sequencia:     P1 6 (g)
+quando p2 tentar acertar sequencia:     P2 6 (g)
 depois de cada rodada:                  X b (espaço) X c
 quando alguem ganhar:                   b (espaço) E
-
