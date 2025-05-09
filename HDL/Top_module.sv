@@ -1,10 +1,10 @@
 module Top_module(
-    input logic [15:0] code,
+    input logic [15:0] SW,
     input logic reset, clock, enter_button,
     output logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
-    output logic [15:0] led,
+    output logic [15:0] LED,
     output logic [7:0] an,
-    output logic [7:0] seg
+    output logic [7:0] dec_ddp
 );
 
     wire p1_win_pulse, p2_win_pulse;
@@ -15,11 +15,11 @@ module Top_module(
         .d1(d1), .d2(d2), .d3(d3), .d4(d4),
         .d5(d5), .d6(d6), .d7(d7), .d8(d8),
         .an(an),
-        .dec_ddp(seg)
+        .dec_ddp(dec_ddp)
     );
 
     BullsCows game (
-        .code(code),
+        .SW(SW),
         .clock(clock),
         .reset(reset),
         .enter_button(enter_button),
@@ -34,7 +34,7 @@ module Top_module(
         .reset(reset),
         .p1vic(p1_win_pulse),
         .p2vic(p2_win_pulse),
-        .led(led)
+        .LED(LED)
     );
 
 endmodule
