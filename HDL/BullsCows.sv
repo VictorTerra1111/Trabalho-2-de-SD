@@ -17,7 +17,7 @@ module BullsCows(
 
     wire enter_rising;
 
-    edge_detector ed (
+    edge_detector_s ed (
         .clock(clock),
         .reset(reset),
         .din(ssl),
