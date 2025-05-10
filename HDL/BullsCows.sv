@@ -55,10 +55,23 @@ module BullsCows(
     always_ff @(posedge clock or posedge reset) begin
         if (reset) begin
             state <= S1;
-            secret1 <= 0; secret2 <= 0;
-            bulls_int <= 0; cows_int <= 0;
-            p1_win <= 0; p2_win <= 0;
+            secret1 <= 0; 
+            secret2 <= 0;
+            bulls_int <= 0; 
+            cows_int <= 0;
+            p1_win <= 0; 
+            p2_win <= 0;
             flag_winner <= 0;
+
+            d1 <= 6'b111111;  // -
+            d2 <= 6'b111111;  // -
+            d3 <= 6'b111111;  // -
+            d4 <= 6'b111111;  // -
+            d5 <= 6'b111111;  // -
+            d6 <= 6'b111111;  // -
+            d7 <= 6'b111111;  // -
+            d8 <= 6'b111111;  // -
+
         end else begin
             // Limpa pulso após 1 ciclo
             p1_win <= 0;

@@ -5,3 +5,13 @@ quando p1 tentar acertar sequencia:     P1 6 (g)
 quando p2 tentar acertar sequencia:     P2 6 (g)
 depois de cada rodada:                  X b (espaço) X c
 quando alguem ganhar:                   b (espaço) E
+
+
+ d1 <= 6'b111111;  // -
+            d2 <= 6'b111111;  // -
+            d3 <= 6'b111111;  // -
+            d4 <= 6'b111111;  // -
+            d5 <= 6'b111111;  // -
+            d6 <= 6'b111111;  // -
+            d7 <= 6'b111111;  // -
+            d8 <= 6'b111111;  // -

@@ -10,9 +10,9 @@ module edge_detector_s
   always @(posedge clock or posedge reset)
   begin
     if (reset == 1'b1) begin
-	  EA <= 2'd0;
+	    EA <= 2'd0;
       rising <= 1'b0;
-	  contador <= 17'd0;
+	    contador <= 17'd0;
     end
     else begin
       case (EA)
