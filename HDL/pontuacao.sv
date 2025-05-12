@@ -8,7 +8,7 @@ module pontuacao(
 
     reg [2:0] p1pontos;
     reg [2:0] p2pontos;
-
+    // deixa LED[8] (do meio) sempre vazio
     always @(posedge clock or posedge reset) begin
         if (reset) begin
             p1pontos <= 0;
