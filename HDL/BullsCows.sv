@@ -24,6 +24,26 @@ module BullsCows(
         .rising(enter_rising)
     );
 
+    function automatic logic tem_repetidos(input [15:0] sw_in);
+        reg [3:0] d [3:0];
+        integer i, j;
+
+        begin
+            // quebra os 16 bits em 4
+            for (i = 0; i < 4; i++) begin
+                d[i] = sw_in[i*4 +: 4]; // part-select 
+            end
+            for (i = 0; i < 4; i++) begin // compara todos os numeros
+                for (j = i + 1; j < 4; j++) begin
+                    if (d[i] == d[j]) begin
+                        return 1;  // tem repetido
+                    end
+                end
+            end
+            return 0;  // tudo certo
+        end
+    endfunction
+        
     // funcao para converter valor de bois e vacas para display
     function automatic [5:0] to_disp6(input integer value);
         if (value >= 0 && value <= 9)
@@ -87,7 +107,12 @@ module BullsCows(
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
                     d8 <= 6'b111111; // -
-                    if (enter_rising) begin secret1 <= SW; state <= S2; end
+                    if (enter_rising) begin
+                        if (!tem_repetidos(SW)) begin
+                            secret1 <= SW;
+                            state <= S2;
+                        end
+                    end
                 end
                 S2: begin // set up de p2
                     d1 <= 6'hF;  // U
@@ -98,7 +123,12 @@ module BullsCows(
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
                     d8 <= 6'b111111; // -
-                    if (enter_rising) begin secret2 <= SW; state <= T1; end
+                    if (enter_rising) begin
+                        if (!tem_repetidos(SW)) begin
+                            secret2 <= SW;
+                            state <= T1;
+                        end
+                    end
                 end
                 T1: begin // vez de p1
                     d1 <= 6'h6;  // G (6)
