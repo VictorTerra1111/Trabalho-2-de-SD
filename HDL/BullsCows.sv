@@ -118,7 +118,7 @@ module BullsCows(
                 T2: begin
                     d1 <= 6'h6;  // G (6)
                     d2 <= 6'b111111; // -
-                    d3 <= 6'h2;  // 1
+                    d3 <= 6'h2;  // 2
                     d4 <= 6'hA;  // P
                     d5 <= 6'b111111; // -
                     d6 <= 6'b111111; // -
@@ -126,16 +126,17 @@ module BullsCows(
                     d8 <= 6'b111111; // -
                     if (enter_rising) begin
                         calc_bulls_cows(secret1, SW, bulls_int, cows_int);
-                        if (bulls_int == 4) begin flag_winner <= 1; state <= WIN; end
-                        else state <= RESULT;
+                        if (bulls_int == 4) begin 
+                            flag_winner <= 1; state <= WIN; 
+                        end else state <= RESULT;
                     end
                 end
                 RESULT: begin
-                    d1 <= to_disp6(bulls_int); // número de touros
-                    d2 <= 6'hB;                // letra "b"
+                    d1 <= 6'hC;                // letra "c"
+                    d2 <= to_disp6(cows_int);  // número de vacas
                     d3 <= 6'h10;               // -
-                    d4 <= to_disp6(cows_int);  // número de vacas
-                    d5 <= 6'hC;                // letra "c"
+                    d4 <= 6'hB;                // letra "b"
+                    d5 <= to_disp6(bulls_int); // número de touros
                     d6 <= 6'b111111;           // -
                     d7 <= 6'b111111;           // -
                     d8 <= 6'b111111;           // -
