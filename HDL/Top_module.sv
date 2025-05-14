@@ -6,7 +6,7 @@ module Top_module(
     output logic [7:0] dec_ddp
 );
 
-    wire p1_win_pulse, p2_win_pulse;
+    wire p1_win_pulse, p2_win_pulse, game_over;
     logic [5:0] d1, d2, d3, d4, d5, d6, d7, d8;
 
     dspl_drv_NexysA7 display(
@@ -26,7 +26,8 @@ module Top_module(
         .d1(d1), .d2(d2), .d3(d3), .d4(d4),
         .d5(d5), .d6(d6), .d7(d7), .d8(d8),
         .p1_win(p1_win_pulse),
-        .p2_win(p2_win_pulse)
+        .p2_win(p2_win_pulse),
+        .game_over(game_over)
     );
 
     pontuacao pontos (
@@ -34,7 +35,8 @@ module Top_module(
         .reset(reset),
         .p1vic(p1_win_pulse),
         .p2vic(p2_win_pulse),
-        .LED(LED)
+        .LED(LED),
+        .game_over(game_over)
     );
 
 endmodule

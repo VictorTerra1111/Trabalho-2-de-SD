@@ -3,6 +3,7 @@ module BullsCows(
     input clock,
     input reset,
     input ssl,
+    input game_over,
 
     output reg [5:0] d1, d2, d3, d4, d5, d6, d7, d8,
     output reg p1_win,
@@ -93,101 +94,113 @@ module BullsCows(
             d8 <= 6'b111111;  // -
 
         end else begin
-            case (state)
-                S1: begin // set up de p1
-                    d1 <= 6'b011111; // U
-                    d2 <= 6'b011011; // S
-                    d3 <= 6'b111111; // -
-                    d4 <= 6'b000011; // 1
-                    d5 <= 6'b010101; // P
-                    d6 <= 6'b111111; // -
-                    d7 <= 6'b111111; // -
-                    d8 <= 6'b111111; // -
-                    if (enter_rising) begin
-                        if (!tem_repetidos(SW)) begin
-                            secret1 <= SW;
-                            state <= S2;
+            if(game_over) begin
+                d1 <= 6'b111111; // -
+                d2 <= 6'b111111; // -
+                d3 <= 6'b111111; // -
+                d4 <= 6'b001101; // G
+                d5 <= 6'b001101; // G
+                d6 <= 6'b111111; // -
+                d7 <= 6'b111111; // -
+                d8 <= 6'b111111; // -
+                // espera reset para continuar
+            end else begin
+                case (state)
+                    S1: begin // set up de p1
+                        d1 <= 6'b011111; // U
+                        d2 <= 6'b011011; // S
+                        d3 <= 6'b111111; // -
+                        d4 <= 6'b000011; // 1
+                        d5 <= 6'b010101; // P
+                        d6 <= 6'b111111; // -
+                        d7 <= 6'b111111; // -
+                        d8 <= 6'b111111; // -
+                        if (enter_rising) begin
+                            if (!tem_repetidos(SW)) begin
+                                secret1 <= SW;
+                                state <= S2;
+                            end
                         end
                     end
-                end
-                S2: begin // set up de p2
-                    d1 <= 6'b011111; // U
-                    d2 <= 6'b011011; // S
-                    d3 <= 6'b111111; // -
-                    d4 <= 6'b000101; // 2
-                    d5 <= 6'b010101; // P
-                    d6 <= 6'b111111; // -
-                    d7 <= 6'b111111; // -
-                    d8 <= 6'b111111; // -
-                    if (enter_rising) begin
-                        if (!tem_repetidos(SW)) begin
-                            secret2 <= SW;
-                            state <= T1;
+                    S2: begin // set up de p2
+                        d1 <= 6'b011111; // U
+                        d2 <= 6'b011011; // S
+                        d3 <= 6'b111111; // -
+                        d4 <= 6'b000101; // 2
+                        d5 <= 6'b010101; // P
+                        d6 <= 6'b111111; // -
+                        d7 <= 6'b111111; // -
+                        d8 <= 6'b111111; // -
+                        if (enter_rising) begin
+                            if (!tem_repetidos(SW)) begin
+                                secret2 <= SW;
+                                state <= T1;
+                            end
                         end
                     end
-                end
-                T1: begin // vez de p1
-                    d1 <= 6'b001101;  // G (6)
-                    d2 <= 6'b111111; // -
-                    d3 <= 6'b000011;  // 1
-                    d4 <= 6'b010101;  // P
-                    d5 <= 6'b111111; // -
-                    d6 <= 6'b111111; // -
-                    d7 <= 6'b111111; // -
-                    d8 <= 6'b111111; // -
-                    if (enter_rising) begin // se confirma
-                        calc_bulls_cows(secret2, SW, bulls_int, cows_int);
-                        if (bulls_int == 4) begin 
-                            flag_winner <= 0; state <= WIN;  // se tem 4 bulls
+                    T1: begin // vez de p1
+                        d1 <= 6'b001101;  // G (6)
+                        d2 <= 6'b111111; // -
+                        d3 <= 6'b000011;  // 1
+                        d4 <= 6'b010101;  // P
+                        d5 <= 6'b111111; // -
+                        d6 <= 6'b111111; // -
+                        d7 <= 6'b111111; // -
+                        d8 <= 6'b111111; // -
+                        if (enter_rising) begin // se confirma
+                            calc_bulls_cows(secret2, SW, bulls_int, cows_int);
+                            if (bulls_int == 4) begin 
+                                flag_winner <= 0; state <= WIN;  // se tem 4 bulls
+                            end
+                            else state <= RESULT;
                         end
-                        else state <= RESULT;
                     end
-                end
-                T2: begin // vez de p2
-                    d1 <= 6'b001101;  // G (6)
-                    d2 <= 6'b111111; // -
-                    d3 <= 6'b000101;  // 2
-                    d4 <= 6'b010101;  // P
-                    d5 <= 6'b111111; // -
-                    d6 <= 6'b111111; // -
-                    d7 <= 6'b111111; // -
-                    d8 <= 6'b111111; // -
-                    if (enter_rising) begin
-                        calc_bulls_cows(secret1, SW, bulls_int, cows_int);
-                        if (bulls_int == 4) begin 
-                            flag_winner <= 1; state <= WIN;  // se tem 4 bulls
-                        end else state <= RESULT;
+                    T2: begin // vez de p2
+                        d1 <= 6'b001101;  // G (6)
+                        d2 <= 6'b111111; // -
+                        d3 <= 6'b000101;  // 2
+                        d4 <= 6'b010101;  // P
+                        d5 <= 6'b111111; // -
+                        d6 <= 6'b111111; // -
+                        d7 <= 6'b111111; // -
+                        d8 <= 6'b111111; // -
+                        if (enter_rising) begin
+                            calc_bulls_cows(secret1, SW, bulls_int, cows_int);
+                            if (bulls_int == 4) begin 
+                                flag_winner <= 1; state <= WIN;  // se tem 4 bulls
+                            end else state <= RESULT;
+                        end
                     end
-                end
-                RESULT: begin // mostra resultado do chute
-                    d1 <= 6'b011001;           // c (cows)
-                    d2 <= to_disp6(cows_int);  // numero de vacas
-                    d3 <= 6'b111111;           // -
-                    d4 <= 6'b010111;           // b (bulls)
-                    d5 <= to_disp6(bulls_int); // numero de touros
-                    d6 <= 6'b111111;           // -
-                    d7 <= 6'b111111;           // -
-                    d8 <= 6'b111111;           // -
-                    if (enter_rising) begin // se confirma, reseta contagem de bois e vacas
-                        bulls_int <= 0;
-                        cows_int <= 0;
-                        state <= (flag_winner == 0) ? T2 : T1;
+                    RESULT: begin // mostra resultado do chute
+                        d1 <= 6'b011001;           // c (cows)
+                        d2 <= to_disp6(cows_int);  // numero de vacas
+                        d3 <= 6'b111111;           // -
+                        d4 <= 6'b010111;           // b (bulls)
+                        d5 <= to_disp6(bulls_int); // numero de touros
+                        d6 <= 6'b111111;           // -
+                        d7 <= 6'b111111;           // -
+                        d8 <= 6'b111111;           // -
+                        if (enter_rising) begin // se confirma, reseta contagem de bois e vacas
+                            bulls_int <= 0;
+                            cows_int <= 0;
+                            state <= (flag_winner == 0) ? T2 : T1;
+                        end
                     end
-                end
-                WIN: begin // ganhou
-                    d1 <= 6'b011101; // E  
-                    d2 <= 6'b111111; // -
-                    d3 <= 6'b010111; // B (bull's eye)
-                    d4 <= 6'b111111; // -
-                    d5 <= 6'b111111; // -
-                    d6 <= 6'b111111; // -
-                    d7 <= 6'b111111; // -
-                    d8 <= 6'b111111; // -
-                    if (flag_winner == 0) p1_win <= 1; // se p1 ganhou
-                    else p2_win <= 1; // se p2 ganhou
-                    if (enter_rising) state <= S1; // se confirma, recomeca
-                end
-            endcase
+                    WIN: begin // ganhou
+                        d1 <= 6'b011101; // E  
+                        d2 <= 6'b111111; // -
+                        d3 <= 6'b010111; // B (bull's eye)
+                        d4 <= 6'b111111; // -
+                        d5 <= 6'b111111; // -
+                        d6 <= 6'b111111; // -
+                        d7 <= 6'b111111; // -
+                        d8 <= 6'b111111; // -
+                        if (flag_winner == 0) p1_win <= 1; // se p1 ganhou
+                        else p2_win <= 1; // se p2 ganhou
+                        if (enter_rising) state <= S1; // se confirma, recomeca
+                    end
+                endcase
+            end
         end
     end
 endmodule
