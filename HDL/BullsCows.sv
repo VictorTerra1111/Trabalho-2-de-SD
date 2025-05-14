@@ -95,11 +95,11 @@ module BullsCows(
         end else begin
             case (state)
                 S1: begin // set up de p1
-                    d1 <= 6'b011110; // U
-                    d2 <= 6'b011010; // S
+                    d1 <= 6'b011111; // U
+                    d2 <= 6'b011011; // S
                     d3 <= 6'b111111; // -
-                    d4 <= 6'b000010; // 1
-                    d5 <= 6'b010100; // P
+                    d4 <= 6'b000011; // 1
+                    d5 <= 6'b010101; // P
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
                     d8 <= 6'b111111; // -
@@ -111,11 +111,11 @@ module BullsCows(
                     end
                 end
                 S2: begin // set up de p2
-                    d1 <= 6'b011110; // U
-                    d2 <= 6'b011010; // S
+                    d1 <= 6'b011111; // U
+                    d2 <= 6'b011011; // S
                     d3 <= 6'b111111; // -
-                    d4 <= 6'b000100; // 2
-                    d5 <= 6'b010100; // P
+                    d4 <= 6'b000101; // 2
+                    d5 <= 6'b010101; // P
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
                     d8 <= 6'b111111; // -
@@ -127,10 +127,10 @@ module BullsCows(
                     end
                 end
                 T1: begin // vez de p1
-                    d1 <= 6'b001100;  // G (6)
+                    d1 <= 6'b001101;  // G (6)
                     d2 <= 6'b111111; // -
-                    d3 <= 6'b000010;  // 1
-                    d4 <= 6'b010100;  // P
+                    d3 <= 6'b000011;  // 1
+                    d4 <= 6'b010101;  // P
                     d5 <= 6'b111111; // -
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
@@ -144,10 +144,10 @@ module BullsCows(
                     end
                 end
                 T2: begin // vez de p2
-                    d1 <= 6'b001100;  // G (6)
+                    d1 <= 6'b001101;  // G (6)
                     d2 <= 6'b111111; // -
-                    d3 <= 6'b000100;  // 1
-                    d4 <= 6'b010100;  // P
+                    d3 <= 6'b000101;  // 2
+                    d4 <= 6'b010101;  // P
                     d5 <= 6'b111111; // -
                     d6 <= 6'b111111; // -
                     d7 <= 6'b111111; // -
@@ -160,10 +160,10 @@ module BullsCows(
                     end
                 end
                 RESULT: begin // mostra resultado do chute
-                    d1 <= 6'b011000;           // c (cows)
+                    d1 <= 6'b011001;           // c (cows)
                     d2 <= to_disp6(cows_int);  // numero de vacas
                     d3 <= 6'b111111;           // -
-                    d4 <= 6'b010110;           // b (bulls)
+                    d4 <= 6'b010111;           // b (bulls)
                     d5 <= to_disp6(bulls_int); // numero de touros
                     d6 <= 6'b111111;           // -
                     d7 <= 6'b111111;           // -
@@ -175,9 +175,9 @@ module BullsCows(
                     end
                 end
                 WIN: begin // ganhou
-                    d1 <= 6'b011100; // E  
+                    d1 <= 6'b011101; // E  
                     d2 <= 6'b111111; // -
-                    d3 <= 6'b010110; // B (bull's eye)
+                    d3 <= 6'b010111; // B (bull's eye)
                     d4 <= 6'b111111; // -
                     d5 <= 6'b111111; // -
                     d6 <= 6'b111111; // -
