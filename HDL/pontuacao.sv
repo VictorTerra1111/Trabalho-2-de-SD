@@ -3,7 +3,7 @@ module pontuacao(
     input reset,
     input p1vic,      
     input p2vic,    
-    input game_over,  
+    output game_over,  
     output reg [15:0] LED
 );
 
