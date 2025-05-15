@@ -49,35 +49,35 @@ module dspl_drv_NexysA7
       case (dig_selection)
         3'd0 : begin
           selected_dig <= d1[4:0];
-          an <= {7'b1111111, ~d1[5]};
+          an <= {7'b1111111, d1[5]};
         end
         3'd1 : begin
           selected_dig <= d2[4:0];
-          an <= {6'b111111, ~d2[5], 1'b1};
+          an <= {6'b111111, d2[5], 1'b1};
         end
         3'd2 : begin
           selected_dig <= d3[4:0];
-          an <= {5'b11111, ~d3[5], 2'b11};
+          an <= {5'b11111, d3[5], 2'b11};
         end
         3'd3 : begin
           selected_dig <= d4[4:0];
-          an <= {4'b1111, ~d4[5], 3'b111};
+          an <= {4'b1111, d4[5], 3'b111};
         end
         3'd4 : begin
           selected_dig <= d5[4:0];
-          an <= {3'b111, ~d5[5], 4'b1111};
+          an <= {3'b111, d5[5], 4'b1111};
         end
         3'd5 : begin
           selected_dig <= d6[4:0];
-          an <= {2'b11, ~d6[5], 5'b11111};
+          an <= {2'b11, d6[5], 5'b11111};
         end
         3'd6 : begin
           selected_dig <= d7[4:0];
-          an <= {1'b1, ~d7[5], 6'b111111};
+          an <= {1'b1, d7[5], 6'b111111};
         end
         default : begin
           selected_dig <= d8[4:0];
-          an <= {~d8[5], 7'b1111111};
+          an <= {d8[5], 7'b1111111};
         end
       endcase
     end
