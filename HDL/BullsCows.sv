@@ -139,37 +139,39 @@ module BullsCows(
                         end
                     end
                     T1: begin // vez de p1
-                        d1 <= 6'b000011;  // 1
+                         d1 <= 6'b000011;  // 1
                         d2 <= 6'b010101;  // P
                         d3 <= 6'b111111;  // - 
-                        d4 <= 6'b111011; // S
-                        d5 <= 6'b111011; // S
-                        d6 <= 6'b111101; // E
+                        d4 <= 6'b011011; // S
+                        d5 <= 6'b011011; // S
+                        d6 <= 6'b011101; // E
                         d7 <= 6'b011110; // U
                         d8 <= 6'b001101; // G
-
                         if (enter_rising) begin // se confirma
+                         if (!tem_repetidos(SW)) begin
                             calc_bulls_cows(secret2, SW, bulls_int, cows_int);
                             if (bulls_int == 4) begin 
                                 flag_winner <= 0; state <= WIN;  // se tem 4 bulls
-                            end
-                            else state <= RESULT;
+                            end else state <= RESULT;
+                        end else state <= T1;
                         end
                     end
                     T2: begin // vez de p2
                         d1 <= 6'b000101;  // 2
                         d2 <= 6'b010101;  // P
                         d3 <= 6'b111111;  // - 
-                        d4 <= 6'b111011; // S
-                        d5 <= 6'b111011; // S
-                        d6 <= 6'b111101; // E
+                        d4 <= 6'b011011; // S
+                        d5 <= 6'b011011; // S
+                        d6 <= 6'b011101; // E
                         d7 <= 6'b011110; // U
                         d8 <= 6'b001101; // G
                         if (enter_rising) begin
+                        if (!tem_repetidos(SW)) begin
                             calc_bulls_cows(secret1, SW, bulls_int, cows_int);
                             if (bulls_int == 4) begin 
                                 flag_winner <= 1; state <= WIN;  // se tem 4 bulls
                             end else state <= RESULT;
+                        end else state <= T2;
                         end
                     end
                     RESULT: begin // mostra resultado do chute
