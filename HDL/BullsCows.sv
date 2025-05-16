@@ -15,7 +15,7 @@ module BullsCows(
     reg [15:0] secret1, secret2; // codigos a serem guardados
     integer bulls_int, cows_int; // inteiros para contagem de bois e vacas
     reg flag_winner;  // 0: p1, 1: p2
-
+    reg next_turn; // 0: t1, 1: t2
     wire enter_rising; // para detector de borda
 
     edge_detector_s ed (
@@ -83,6 +83,7 @@ module BullsCows(
             p1_win <= 0; 
             p2_win <= 0;
             flag_winner <= 0;
+            next_turn <= 0;
 
             d1 <= 6'b111111;  // -
             d2 <= 6'b111111;  // -
@@ -95,14 +96,25 @@ module BullsCows(
 
         end else begin
             if(game_over) begin
-                d1 <= 6'b111111; // -
-                d2 <= 6'b111111; // -
-                d3 <= 6'b111111; // -
-                d4 <= 6'b001101; // G
-                d5 <= 6'b001101; // G
-                d6 <= 6'b111111; // -
-                d7 <= 6'b111111; // -
-                d8 <= 6'b111111; // -
+                if(flag_winner) begin
+                    d1 <= 6'b000011; // 1
+                    d2 <= 6'b010101; // P
+                    d3 <= 6'b111111; // -
+                    d4 <= 6'b001101; // G
+                    d5 <= 6'b001101; // G
+                    d6 <= 6'b111111; // -
+                    d7 <= 6'b000011; // 1
+                    d8 <= 6'b010101; // P
+                end else begin
+                    d1 <= 6'b000101; // 2
+                    d2 <= 6'b010101; // P
+                    d3 <= 6'b111111; // -
+                    d4 <= 6'b001101; // G
+                    d5 <= 6'b001101; // G
+                    d6 <= 6'b111111; // -
+                    d7 <= 6'b000101; // 2
+                    d8 <= 6'b010101; // P
+                end
                 // espera reset para continuar
             end else begin
                 case (state)
@@ -139,39 +151,45 @@ module BullsCows(
                         end
                     end
                     T1: begin // vez de p1
-                         d1 <= 6'b000011;  // 1
-                        d2 <= 6'b010101;  // P
-                        d3 <= 6'b111111;  // - 
-                        d4 <= 6'b011011; // S
-                        d5 <= 6'b011011; // S
-                        d6 <= 6'b011101; // E
-                        d7 <= 6'b011110; // U
-                        d8 <= 6'b001101; // G
+                        d1 <= 6'b011011;  // S
+                        d2 <= 6'b011011;  // S
+                        d3 <= 6'b011101;  // E
+                        d4 <= 6'b011111;  // U
+                        d5 <= 6'b001101;  // G
+                        d6 <= 6'b111111;  // -
+                        d7 <= 6'b000011;  // 1
+                        d8 <= 6'b010101;  // P
                         if (enter_rising) begin // se confirma
-                         if (!tem_repetidos(SW)) begin
-                            calc_bulls_cows(secret2, SW, bulls_int, cows_int);
-                            if (bulls_int == 4) begin 
-                                flag_winner <= 0; state <= WIN;  // se tem 4 bulls
-                            end else state <= RESULT;
-                        end else state <= T1;
+                            if (!tem_repetidos(SW)) begin
+                                calc_bulls_cows(secret2, SW, bulls_int, cows_int);
+                                if (bulls_int == 4) begin 
+                                    flag_winner <= 0; state <= WIN;  // se tem 4 bulls
+                                end else begin
+                                    next_turn <= 1;
+                                    state <= RESULT;
+                                end
+                            end else state <= T1;
                         end
                     end
                     T2: begin // vez de p2
-                        d1 <= 6'b000101;  // 2
-                        d2 <= 6'b010101;  // P
-                        d3 <= 6'b111111;  // - 
-                        d4 <= 6'b011011; // S
-                        d5 <= 6'b011011; // S
-                        d6 <= 6'b011101; // E
-                        d7 <= 6'b011110; // U
-                        d8 <= 6'b001101; // G
+                        d1 <= 6'b011011;  // S
+                        d2 <= 6'b011011;  // S
+                        d3 <= 6'b011101;  // E
+                        d4 <= 6'b011111;  // U
+                        d5 <= 6'b001101;  // G
+                        d6 <= 6'b111111;  // -
+                        d7 <= 6'b000101;  // 2
+                        d8 <= 6'b010101;  // P
                         if (enter_rising) begin
-                        if (!tem_repetidos(SW)) begin
-                            calc_bulls_cows(secret1, SW, bulls_int, cows_int);
-                            if (bulls_int == 4) begin 
-                                flag_winner <= 1; state <= WIN;  // se tem 4 bulls
-                            end else state <= RESULT;
-                        end else state <= T2;
+                            if(!tem_repetidos(SW)) begin
+                                calc_bulls_cows(secret1, SW, bulls_int, cows_int);
+                                if (bulls_int == 4) begin 
+                                    flag_winner <= 1; state <= WIN;  // se tem 4 bulls
+                                end else begin
+                                    next_turn <= 0;
+                                    state <= RESULT;
+                                end
+                            end else state <= T2;
                         end
                     end
                     RESULT: begin // mostra resultado do chute
@@ -186,7 +204,7 @@ module BullsCows(
                         if (enter_rising) begin // se confirma, reseta contagem de bois e vacas
                             bulls_int <= 0;
                             cows_int <= 0;
-                            state <= (flag_winner == 0) ? T2 : T1;
+                            state <= (next_turn) ? T2 : T1;
                         end
                     end
                     WIN: begin // ganhou
