@@ -11,9 +11,10 @@ module pontuacao(
     reg p1wins_r, p2wins_r; 
     wire p1vic_pulse, p2vic_pulse;
 
-    assign p1vic_pulse = p1vic & ~p1wins_r; // mesmo funcionamento do edge_detector_s
+    assign p1vic_pulse = p1vic & ~p1wins_r;
     assign p2vic_pulse = p2vic & ~p2wins_r;
 
+    // conta pontos
     always @(posedge clock or posedge reset) begin
         if (reset) begin
             p1pontos <= 0;
@@ -21,22 +22,28 @@ module pontuacao(
             game_over <= 0;
             p1wins_r <= 0;
             p2wins_r <= 0;
-            LED <= 16'b0;
         end else begin
             p1wins_r <= p1vic;
             p2wins_r <= p2vic;
 
-            if (!game_over) begin // se nao acabou
+            if (!game_over) begin
                 if (p1vic_pulse && p1pontos < 7) begin
                     p1pontos <= p1pontos + 1;
-                    if (p1pontos == 6) game_over <= 1;  // 7º ponto
+                    if (p1pontos == 6) game_over <= 1;
                 end
                 if (p2vic_pulse && p2pontos < 7) begin
                     p2pontos <= p2pontos + 1;
-                    if (p2pontos == 6) game_over <= 1;  // 7º ponto
+                    if (p2pontos == 6) game_over <= 1;
                 end
-            end 
-              case (p1pontos)
+            end
+        end
+    end
+    
+    always @(*) begin
+        if (reset) begin
+            LED = 16'b0; // limpa tudo
+        end else begin
+            case (p1pontos)
                 3'd0: LED[15:8] = 8'b00000000;
                 3'd1: LED[15:8] = 8'b10000000;
                 3'd2: LED[15:8] = 8'b11000000;
