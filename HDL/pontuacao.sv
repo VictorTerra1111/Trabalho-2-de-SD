@@ -28,16 +28,37 @@ module pontuacao(
 
             if (!game_over) begin // se nao acabou
                 if (p1vic_pulse && p1pontos < 7) begin
-                    LED <= LED | (16'b1 << (15 - p1pontos));
                     p1pontos <= p1pontos + 1;
                     if (p1pontos == 6) game_over <= 1;  // 7º ponto
                 end
                 if (p2vic_pulse && p2pontos < 7) begin
-                    LED <= LED | (16'b1 << p2pontos);
                     p2pontos <= p2pontos + 1;
                     if (p2pontos == 6) game_over <= 1;  // 7º ponto
                 end
-            end
+            end 
+              case (p1pontos)
+                3'd0: LED[15:8] = 8'b00000000;
+                3'd1: LED[15:8] = 8'b10000000;
+                3'd2: LED[15:8] = 8'b11000000;
+                3'd3: LED[15:8] = 8'b11100000;
+                3'd4: LED[15:8] = 8'b11110000;
+                3'd5: LED[15:8] = 8'b11111000;
+                3'd6: LED[15:8] = 8'b11111100;
+                3'd7: LED[15:8] = 8'b11111110;
+                default: LED[15:8] = 8'b11111111;
+            endcase
+
+            case (p2pontos)
+                3'd0: LED[7:0] = 8'b00000000;
+                3'd1: LED[7:0] = 8'b00000001;
+                3'd2: LED[7:0] = 8'b00000011;
+                3'd3: LED[7:0] = 8'b00000111;
+                3'd4: LED[7:0] = 8'b00001111;
+                3'd5: LED[7:0] = 8'b00011111;
+                3'd6: LED[7:0] = 8'b00111111;
+                3'd7: LED[7:0] = 8'b01111111;
+                default: LED[7:0] = 8'b11111111;
+            endcase
         end
     end
 endmodule
